@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Docker Practice Demo</title>
+  <style>
+    body { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; margin: 0; background: #f4f8ff; color: #1a202c; }
+    .container { max-width: 960px; margin: 2rem auto; padding: 1.5rem; background: #ffffff; border-radius: 12px; box-shadow: 0 10px 30px rgba(31, 41, 55, 0.08); }
+    h1 { margin-bottom: 0.4rem; color: #0f172a; }
+    h2 { margin-top: 1.8rem; margin-bottom: 0.6rem; color: #1d4ed8; }
+    p { line-height: 1.6; margin-bottom: 0.9rem; }
+    pre { background: #0f172a; color: #dbeafe; border-radius: 8px; padding: 1rem; overflow-x: auto; }
+    code { font-family: "JetBrains Mono", "Fira Code", monospace; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(240px,1fr)); gap: 1rem; margin-top: 1rem; }
+    .card { border: 1px solid #e2e8f0; border-radius: 10px; padding: 1rem; background: #f8fafc; }
+    .btn { display: inline-block; padding: 0.6rem 1rem; background: #2563eb; color: white; border-radius: 8px; text-decoration: none; font-weight: 600; }
+    .live { margin-top: 1rem; font-size: 0.95rem; color: #0f766e; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Docker Practice NGINX Demo</h1>
+    <p>Hi there! This is a starter web page designed for practicing Docker build + container run workflows. It includes Dockerfile guidance and a real local health check UI section.</p>
+
+    <h2>Features</h2>
+    <div class="grid">
+      <div class="card"><strong>1. Docker-ready page</strong><br>Static HTML + CSS for building a simple image.</div>
+      <div class="card"><strong>2. Command snippets</strong><br>Quick Docker commands for build, run, inspect, and cleanup.</div>
+      <div class="card"><strong>3. Service check</strong><br>A sample health badge update block with dynamic status.</div>
+    </div>
+
+    <h2>Docker Quickstart</h2>
+    <pre><code># build image
+docker build -t nginx-demo:latest .
+
+# run container
+docker run -d --name nginx-demo -p 8080:80 nginx-demo:latest
+
+# test in browser
+open http://localhost:8080
+
+# logs
+docker logs -f nginx-demo
+
+# cleanup
+docker stop nginx-demo && docker rm nginx-demo && docker rmi nginx-demo:latest
+</code></pre>
+
+    <h2>Page Actions</h2>
+    <p>Click the ✅ button to simulate a health check refresh (UI only).</p>
+    <button class="btn" id="refreshBtn">Refresh health status</button>
+    <p class="live" id="healthMsg">Health status: waiting on your first check...</p>
+
+    <script>
+      const refreshBtn = document.getElementById('refreshBtn');
+      const healthMsg = document.getElementById('healthMsg');
+      function checkHealth() {
+        const now = new Date();
+        const up = Math.random() > 0.2;
+        healthMsg.textContent = `Health status: ${up ? 'healthy' : 'degraded'} (checked ${now.toLocaleTimeString()})`;
+        healthMsg.style.color = up ? '#065f46' : '#b91c1c';
+      }
+      refreshBtn.addEventListener('click', checkHealth);
+      checkHealth();
+    </script>
+  </div>
+</body>
+</html>
